@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Be My Valentine</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Poppins:wght@400;700&display=swap');
+
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,10 +29,12 @@
             border-radius: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
             margin-bottom: 20px;
         }
 
@@ -43,6 +47,8 @@
             display: inline-block;
             padding: 12px 25px;
             font-size: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
             color: #7e57c2;
             background-color: white;
             border: none;
@@ -74,8 +80,10 @@
         .beautiful-text {
             position: absolute;
             font-size: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
             color: rgba(255, 255, 255, 0.8);
-            animation: float 12s infinite ease-in-out;
+            z-index: 1;
         }
 
         @keyframes fall {
@@ -85,17 +93,6 @@
             }
             100% {
                 transform: translateY(100vh) translateX(50px);
-                opacity: 0;
-            }
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(-100vh);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh);
                 opacity: 0;
             }
         }
@@ -112,7 +109,7 @@
     <div class="card hidden" id="no-card">
         <h1>Are you sure? 🥺</h1>
         <p>I really hope you’ll reconsider. You mean the world to me.</p>
-        <a href="#" class="btn" onclick="simulateYes()">Take Me Back 💕</a>
+        <a href="#" class="btn" onclick="goBack()">Take Me Back 💕</a>
     </div>
 
     <script>
@@ -124,6 +121,24 @@
             "You make everything better",
             "You are my sunshine",
             "You are perfect to me",
+            "I love your smile",
+            "You make every moment special",
+            "You are one of a kind",
+            "You brighten my darkest days",
+            "Your laughter is contagious",
+            "You make my heart skip a beat",
+            "You are my greatest adventure",
+            "You make me feel complete",
+            "You are extraordinary",
+            "You are my favorite person",
+            "Your kindness knows no bounds",
+            "You are the best thing to happen to me",
+            "You make life so much better",
+            "Your love is my anchor",
+            "You are my safe haven",
+            "You bring joy wherever you go",
+            "Your heart is pure gold",
+            "You have the most beautiful soul"
         ];
 
         function showNo() {
@@ -137,20 +152,12 @@
         }
 
         function showYes() {
-            setInterval(launchConfetti, 500);
-            setInterval(launchBeautifulText, 2000);
+            launchConfetti();
             alert('Yay! You said yes! 💖');
-        }
-
-        function simulateYes() {
-            setInterval(launchConfetti, 500);
-            setInterval(launchBeautifulText, 2000);
-            alert('Yay! You said yes! 💖');
-            goBack();
         }
 
         function launchConfetti() {
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 100; i++) {
                 let confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.setProperty('--hue', Math.random() * 360);
@@ -161,21 +168,20 @@
             }
         }
 
-        function launchBeautifulText() {
-            for (let i = 0; i < 5; i++) {
-                let text = document.createElement('div');
-                text.className = 'beautiful-text';
-                text.innerText = compliments[Math.floor(Math.random() * compliments.length)];
-                text.style.left = Math.random() * 100 + 'vw';
-                text.style.animationDelay = Math.random() * 2 + 's';
-                document.body.appendChild(text);
-                setTimeout(() => text.remove(), 12000);
-            }
+        // Add stationary text compliments to the background
+        function addBeautifulText() {
+            compliments.forEach((text, index) => {
+                let complimentElement = document.createElement('div');
+                complimentElement.className = 'beautiful-text';
+                complimentElement.innerText = text;
+                complimentElement.style.left = index % 2 === 0 ? Math.random() * 20 + 'vw' : Math.random() * 80 + 60 + 'vw';
+                complimentElement.style.top = Math.random() * 90 + 'vh';
+                document.body.appendChild(complimentElement);
+            });
         }
 
-        // Start falling elements immediately
-        setInterval(launchConfetti, 500);
-        setInterval(launchBeautifulText, 2000);
+        addBeautifulText();
     </script>
 </body>
 </html>
+
