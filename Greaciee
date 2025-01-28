@@ -68,7 +68,14 @@
             background: hsl(var(--hue), 70%, 50%);
             opacity: 0.7;
             border-radius: 50%;
-            animation: fall 4s infinite ease-in;
+            animation: fall 10s infinite ease-in;
+        }
+
+        .beautiful-text {
+            position: absolute;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: float 12s infinite ease-in-out;
         }
 
         @keyframes fall {
@@ -78,6 +85,17 @@
             }
             100% {
                 transform: translateY(100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
                 opacity: 0;
             }
         }
@@ -93,11 +111,21 @@
 
     <div class="card hidden" id="no-card">
         <h1>Are you sure? 🥺</h1>
-        <p>You suck.</p>
+        <p>I really hope you’ll reconsider. You mean the world to me.</p>
         <a href="#" class="btn" onclick="simulateYes()">Take Me Back 💕</a>
     </div>
 
     <script>
+        const compliments = [
+            "You are beautiful",
+            "You light up my world",
+            "You have the kindest heart",
+            "You inspire me every day",
+            "You make everything better",
+            "You are my sunshine",
+            "You are perfect to me",
+        ];
+
         function showNo() {
             document.getElementById('main-card').classList.add('hidden');
             document.getElementById('no-card').classList.remove('hidden');
@@ -109,25 +137,45 @@
         }
 
         function showYes() {
-            launchConfetti();
+            setInterval(launchConfetti, 500);
+            setInterval(launchBeautifulText, 2000);
             alert('Yay! You said yes! 💖');
         }
 
         function simulateYes() {
-            launchConfetti();
+            setInterval(launchConfetti, 500);
+            setInterval(launchBeautifulText, 2000);
             alert('Yay! You said yes! 💖');
             goBack();
         }
 
         function launchConfetti() {
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 10; i++) {
                 let confetti = document.createElement('div');
                 confetti.className = 'confetti';
                 confetti.style.setProperty('--hue', Math.random() * 360);
                 confetti.style.left = Math.random() * 100 + 'vw';
                 confetti.style.animationDelay = Math.random() * 2 + 's';
                 document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
+                setTimeout(() => confetti.remove(), 10000);
             }
         }
-    </scr
+
+        function launchBeautifulText() {
+            for (let i = 0; i < 5; i++) {
+                let text = document.createElement('div');
+                text.className = 'beautiful-text';
+                text.innerText = compliments[Math.floor(Math.random() * compliments.length)];
+                text.style.left = Math.random() * 100 + 'vw';
+                text.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(text);
+                setTimeout(() => text.remove(), 12000);
+            }
+        }
+
+        // Start falling elements immediately
+        setInterval(launchConfetti, 500);
+        setInterval(launchBeautifulText, 2000);
+    </script>
+</body>
+</html>
