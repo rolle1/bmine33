@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #7e57c2, #ff7eb3, #ff758c);
+            color: white;
+            text-align: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1rem;
+            color: #7e57c2;
+            background-color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #7e57c2;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: hsl(var(--hue), 70%, 50%);
+            opacity: 0.7;
+            border-radius: 50%;
+            animation: fall 10s infinite ease-in;
+        }
+
+        .beautiful-text {
+            position: absolute;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            animation: float 12s infinite ease-in-out;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card" id="main-card">
+        <h1>Will You Be My Valentine?</h1>
+        <p>You make my world brighter and my heart fuller. I couldn't imagine this Valentine's Day without you.</p>
+        <a href="#" class="btn" onclick="showYes()">Yes, I Will! 💖</a>
+        <a href="#" class="btn" onclick="showNo()">No 😢</a>
+    </div>
+
+    <div class="card hidden" id="no-card">
+        <h1>Are you sure? 🥺</h1>
+        <p>I really hope you’ll reconsider. You mean the world to me.</p>
+        <a href="#" class="btn" onclick="simulateYes()">Take Me Back 💕</a>
+    </div>
+
+    <script>
+        const compliments = [
+            "You are beautiful",
+            "You light up my world",
+            "You have the kindest heart",
+            "You inspire me every day",
+            "You make everything better",
+            "You are my sunshine",
+            "You are perfect to me",
+        ];
+
+        function showNo() {
+            document.getElementById('main-card').classList.add('hidden');
+            document.getElementById('no-card').classList.remove('hidden');
+        }
+
+        function goBack() {
+            document.getElementById('no-card').classList.add('hidden');
+            document.getElementById('main-card').classList.remove('hidden');
+        }
+
+        function showYes() {
+            setInterval(launchConfetti, 500);
+            setInterval(launchBeautifulText, 2000);
+            alert('Yay! You said yes! 💖');
+        }
+
+        function simulateYes() {
+            setInterval(launchConfetti, 500);
+            setInterval(launchBeautifulText, 2000);
+            alert('Yay! You said yes! 💖');
+            goBack();
+        }
+
+        function launchConfetti() {
+            for (let i = 0; i < 10; i++) {
+                let confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.setProperty('--hue', Math.random() * 360);
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 10000);
+            }
+        }
+
+        function launchBeautifulText() {
+            for (let i = 0; i < 5; i++) {
+                let text = document.createElement('div');
+                text.className = 'beautiful-text';
+                text.innerText = compliments[Math.floor(Math.random() * compliments.length)];
+                text.style.left = Math.random() * 100 + 'vw';
+                text.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(text);
+                setTimeout(() => text.remove(), 12000);
+            }
+        }
+
+        // Start falling elements immediately
+        setInterval(launchConfetti, 500);
+        setInterval(launchBeautifulText, 2000);
+    </script>
+</body>
+</html>
